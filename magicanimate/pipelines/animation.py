@@ -182,7 +182,7 @@ def main(args):
         if source_image.endswith(".mp4"):
             source_image = np.array(Image.fromarray(VideoReader(source_image).read()[0]).resize((size, size)))
         else:
-            source_image = np.array(Image.open(source_image).resize((size, size)))
+            source_image = np.array(Image.open(source_image).convert('RGB').resize((size, size)))
         H, W, C = source_image.shape
         
         print(f"current seed: {torch.initial_seed()}")
