@@ -126,4 +126,4 @@ torchvision==0.15.2
 xformers==0.0.22
 diffusers==0.21.4
 firebase-python
-firebase_admin
+firebase-admin
