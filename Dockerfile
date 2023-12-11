@@ -12,4 +12,6 @@ RUN apt-get update && apt-get install --allow-downgrades -y \
     unzip \
     python-is-python3
 
-RUN pip install -r requirements.txt
+RUN git clone https://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@github.com/samiul272/magic-animate.git
+RUN cd magic-animate && pip install -r requirements.txt
+RUN cd magic-animate && pip install -r vid2densepose/requirements.txt

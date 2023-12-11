@@ -69,6 +69,7 @@ def download_file_from_url(url, local_path):
 @web_endpoint()
 def predict(src_url: str,
             ref_url: str,
+            steps: str
             ):
     """Run a single prediction on the model"""
 
@@ -82,59 +83,63 @@ def predict(src_url: str,
     firebase_admin.initialize_app(cred, {
         'storageBucket': 'twerkai.appspot.com'
     })
+
     src_name = next(tempfile._get_candidate_names())
     ref_name = next(tempfile._get_candidate_names())
     src_path = f'{src_name}.PNG'
     ref_path = f'{ref_name}.MP4'
     # # Run the command
-    subprocess.run(command, cwd=working_directory)
-    subprocess.run(['python', '--version'])
-    download_file_from_url(src_url, src_path)
-    download_file_from_url(ref_url, ref_path)
+    # subprocess.run(command, cwd=working_directory)
+    # subprocess.run(['python', '--version'])
+    # download_file_from_url(src_url, src_path)
+    # download_file_from_url(ref_url, ref_path)
     # return
-    gpu_ids = 0
-    num_source = 1
-    output_dir = "results"
-    assets_dir = f"{working_directory}/assets"
-    model_id = "donald_trump_2"
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    # gpu_ids = 0
+    # num_source = 1
+    # output_dir = "results"
+    # assets_dir = f"{working_directory}/assets"
+    # model_id = "donald_trump_2"
+    # Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     # Change to the specified directory
 
-    command = [
-        "python3", f"/iPERCore/demo/motion_imitate.py",
-        "--gpu_ids", str(gpu_ids),
-        "--image_size", str(image_size),
-        "--num_source", str(num_source),
-        "--output_dir", output_dir,
-        "--assets_dir", assets_dir,
-        "--model_id", model_id,
-        "--src_path", f"path?={src_path},name?={src_name}",
-        "--ref_path", f"path?={ref_path},name?={ref_name},pose_fc?=300"
-    ]
-    opt = subprocess.run(command)
-    outfle = f'results/primitives/{src_name}/synthesis/imitations/{src_name}-{ref_name}.mp4'
+    # command = [
+    #     "python3", f"/iPERCore/demo/motion_imitate.py",
+    #     "--gpu_ids", str(gpu_ids),
+    #     "--image_size", str(image_size),
+    #     "--num_source", str(num_source),
+    #     "--output_dir", output_dir,
+    #     "--assets_dir", assets_dir,
+    #     "--model_id", model_id,
+    #     "--src_path", f"path?={src_path},name?={src_name}",
+    #     "--ref_path", f"path?={ref_path},name?={ref_name},pose_fc?=300"
+    # ]
+    # opt = subprocess.run(command)
+    # outfle = f'results/primitives/{src_name}/synthesis/imitations/{src_name}-{ref_name}.mp4'
 
-    return upload_file_to_firebase(outfle, outfle)
+    # return upload_file_to_firebase(outfle, outfle)
+    print(f"done {src_url}, {ref_url}, {steps}")
+    return f"done {src_url}, {ref_url}, {steps}"
 
 
-@stub.local_entrypoint()
-def main():
-    cred = credentials.Certificate("twerkai-firebase-adminsdk-9wbm4-f3be4128b9.json")
-
-    # Initialize the app with the credentials
-    firebase_admin.initialize_app(cred, {
-        'storageBucket': 'twerkai.appspot.com'
-    })
-    src_image = upload_file_to_firebase('./iPERCore/assets/samples/sources/donald_trump_2/00000.PNG',
-                                        'assets/samples/sources/donald_trump_2/00000.PNG')
-    ref_vid = upload_file_to_firebase('./iPERCore/assets/samples/references/akun_1.mp4',
-                                      'assets/samples/references/akun_1.mp4')
-    print(src_image, ref_vid, )
-    p = predict.call(512, src_image,
-                     ref_vid)
-
-    print(p)
-# https://storage.googleapis.com/twerkai.appspot.com/assets/samples/sources/donald_trump_2/00000.PNG https://storage.googleapis.com/twerkai.appspot.com/assets/samples/references/akun_1.mp4
-# https://vrl-inc--single-view-impersonator-predict-samiul272-dev.modal.run
-# curl --location "https://vrl-inc--single-view-impersonator-predict-samiul272-dev.modal.run?image_size=512&src_url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Ftwerkai.appspot.com%2Fo%2Fusers%252FtUZIbt0M9MSl5jDuSXqFxlqAGOG2%252Fimages%252F00000.PNG%3Falt%3Dmedia%26token%3D8f406a68-b610-4d97-87cc-58c7a63fd264&ref_url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Ftwerkai.appspot.com%2Fo%2Fdances%252F001_18_2.mp4%3Falt%3Dmedia%26token%3D1a28b73a-e254-4076-89a7-6472f7557b23"
+# @stub.local_entrypoint()
+# def main():
+#     cred = eval(os.environ["firebase_json"])
+#     cred = credentials.Certificate(cred)
+#
+#     # Initialize the app with the credentials
+#     firebase_admin.initialize_app(cred, {
+#         'storageBucket': 'twerkai.appspot.com'
+#     })
+#     src_image = upload_file_to_firebase('./iPERCore/assets/samples/sources/donald_trump_2/00000.PNG',
+#                                         'assets/samples/sources/donald_trump_2/00000.PNG')
+#     ref_vid = upload_file_to_firebase('./iPERCore/assets/samples/references/akun_1.mp4',
+#                                       'assets/samples/references/akun_1.mp4')
+#     print(src_image, ref_vid, )
+#     p = predict(src_image,
+#                      ref_vid, 256)
+#
+#     print(p)
+# # https://storage.googleapis.com/twerkai.appspot.com/assets/samples/sources/donald_trump_2/00000.PNG https://storage.googleapis.com/twerkai.appspot.com/assets/samples/references/akun_1.mp4
+# # https://vrl-inc--single-view-impersonator-predict-samiul272-dev.modal.run
+# # curl --location "https://vrl-inc--single-view-impersonator-predict-samiul272-dev.modal.run?image_size=512&src_url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Ftwerkai.appspot.com%2Fo%2Fusers%252FtUZIbt0M9MSl5jDuSXqFxlqAGOG2%252Fimages%252F00000.PNG%3Falt%3Dmedia%26token%3D8f406a68-b610-4d97-87cc-58c7a63fd264&ref_url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Ftwerkai.appspot.com%2Fo%2Fdances%252F001_18_2.mp4%3Falt%3Dmedia%26token%3D1a28b73a-e254-4076-89a7-6472f7557b23"
