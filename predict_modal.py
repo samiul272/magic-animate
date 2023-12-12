@@ -69,7 +69,7 @@ def download_file_from_url(url, local_path):
 def predict(
         src_url: str = "https://raw.githubusercontent.com/magic-research/magic-animate/main/inputs/applications/source_image/demo4.png",
         ref_url: str = "https://github.com/magic-research/magic-animate/blob/main/inputs/applications/driving/densepose/dancing2.mp4",
-        steps: int = 5
+        steps: int = 25
         ):
     """Run a single prediction on the model"""
 
@@ -92,8 +92,8 @@ def predict(
 
     src_name = next(tempfile._get_candidate_names())
     ref_name = next(tempfile._get_candidate_names())
-    src_path = os.path.join(working_directory, 'tmp', f'{src_name}.PNG')
-    ref_path = os.path.join(working_directory, 'tmp', f'{ref_name}.MP4')
+    src_path = os.path.join(working_directory, 'tmp', f'{src_name}.png')
+    ref_path = os.path.join(working_directory, 'tmp', f'{ref_name}.mp4')
     command = ['ls', 'tmp']
     print(' '.join(command))
     subprocess.run(command, cwd=working_directory)
@@ -108,7 +108,7 @@ def predict(
     subprocess.run(command, cwd=working_directory)
 
 
-    densepose_path = os.path.join(working_directory, 'tmp', 'densepose', f'{ref_name}.MP4')
+    densepose_path = os.path.join(working_directory, 'tmp', 'densepose', f'{ref_name}.mp4')
 
     command = [
         'python', 'vid2densepose/main.py',
