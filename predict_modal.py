@@ -92,13 +92,17 @@ def predict(src_url: str="",
     subprocess.run(command, cwd=working_directory)
     command = [
         'python', 'vid2densepose/main.py',
-        '-i', 'inputs/applications/driving/densepose/akun_1.mp4',
-        '-o', 'inputs/applications/driving/densepose/output_video_v2.mp4'
+        '-i', 'inputs/applications/driving/video/akun_1.mp4',
+        '-o', 'inputs/applications/driving/densepose/akun_1.mp4'
     ]
     subprocess.run(command, cwd=working_directory)
 
     command = ['ls', 'inputs/applications/driving/densepose']
     subprocess.run(command, cwd=working_directory)
+
+    command = [
+        'python', '-m', 'magicanimate.pipelines.animation', '--config', 'configs/prompts/animation.yaml'
+    ]
     print(f"done {src_url}, {ref_url}, {steps}")
     return f"done {src_url}, {ref_url}, {steps}"
 
