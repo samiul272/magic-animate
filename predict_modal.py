@@ -67,9 +67,9 @@ def download_file_from_url(url, local_path):
     timeout=3600,
 )
 @web_endpoint()
-def predict(src_url: str,
-            ref_url: str,
-            steps: str
+def predict(src_url: str="",
+            ref_url: str="",
+            steps: int=0
             ):
     """Run a single prediction on the model"""
 
@@ -90,7 +90,14 @@ def predict(src_url: str,
     src_path = f'{src_name}.PNG'
     ref_path = f'{ref_name}.MP4'
     subprocess.run(command, cwd=working_directory)
-    command = ['python vid2densepose/main.py -i input/applications/akun1.mp4 -o input/applications/output_video.mp4']
+    command = [
+        'python', 'vid2densepose/main.py',
+        '-i', 'inputs/applications/driving/densepose/akun_1.mp4',
+        '-o', 'inputs/applications/driving/densepose/output_video_v2.mp4'
+    ]
+    subprocess.run(command, cwd=working_directory)
+
+    command = ['ls', 'inputs/applications/driving/densepose']
     subprocess.run(command, cwd=working_directory)
     print(f"done {src_url}, {ref_url}, {steps}")
     return f"done {src_url}, {ref_url}, {steps}"
