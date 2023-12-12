@@ -11,7 +11,7 @@ savename: null
 fusion_blocks: "midup"
 
 seed:           [1]
-steps:          256
+steps:          25
 guidance_scale: 7.5
 
 source_image:
