@@ -15,7 +15,7 @@ steps:          256
 guidance_scale: 7.5
 
 source_image:
-  - "inputs/applications/source_image/00000.png"
+  - "inputs/applications/source_image/0002.png"
 #  - "inputs/applications/source_image/monalisa.png"
 #  - "inputs/applications/source_image/0002.png"
 #  - "inputs/applications/source_image/demo4.png"
