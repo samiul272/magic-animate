@@ -23,7 +23,7 @@ source_image:
 #  - "inputs/applications/source_image/dalle8.jpeg"
 #  - "inputs/applications/source_image/multi1_source.png"
 video_path:
-    - "inputs/applications/driving/densepose/output_video.mp4"
+    - "inputs/applications/driving/densepose/akun_1.mp4"
 #  - "inputs/applications/driving/densepose/running.mp4"
 #  - "inputs/applications/driving/densepose/demo4.mp4"
 #  - "inputs/applications/driving/densepose/demo4.mp4"

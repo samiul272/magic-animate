@@ -103,6 +103,7 @@ def predict(src_url: str="",
     command = [
         'python', '-m', 'magicanimate.pipelines.animation', '--config', 'configs/prompts/animation.yaml'
     ]
+    subprocess.run(command, cwd=working_directory)
     print(f"done {src_url}, {ref_url}, {steps}")
     return f"done {src_url}, {ref_url}, {steps}"
 
