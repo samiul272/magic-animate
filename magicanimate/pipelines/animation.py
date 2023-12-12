@@ -171,7 +171,7 @@ def main(args):
             torch.seed()
         config.random_seed.append(torch.initial_seed())
 
-        if test_video.endswith('.mp4'):
+        if test_video.lower().endswith('.mp4'):
             control = VideoReader(test_video).read()
             if control[0].shape[0] != size:
                 control = [np.array(Image.fromarray(c).resize((size, size))) for c in control]
