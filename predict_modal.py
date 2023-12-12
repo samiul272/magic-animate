@@ -76,7 +76,8 @@ def predict(src_url: str,
     command = ["git", "pull", "--rebase"]
     #
     # # Set the working directory
-    working_directory = "/iPERCore"
+    working_directory = "/magic-animate"
+
     cred = eval(os.environ["firebase_json"])
 
     cred = credentials.Certificate(cred)
@@ -88,36 +89,9 @@ def predict(src_url: str,
     ref_name = next(tempfile._get_candidate_names())
     src_path = f'{src_name}.PNG'
     ref_path = f'{ref_name}.MP4'
-    # # Run the command
-    # subprocess.run(command, cwd=working_directory)
-    # subprocess.run(['python', '--version'])
-    # download_file_from_url(src_url, src_path)
-    # download_file_from_url(ref_url, ref_path)
-    # return
-    # gpu_ids = 0
-    # num_source = 1
-    # output_dir = "results"
-    # assets_dir = f"{working_directory}/assets"
-    # model_id = "donald_trump_2"
-    # Path(output_dir).mkdir(parents=True, exist_ok=True)
-
-    # Change to the specified directory
-
-    # command = [
-    #     "python3", f"/iPERCore/demo/motion_imitate.py",
-    #     "--gpu_ids", str(gpu_ids),
-    #     "--image_size", str(image_size),
-    #     "--num_source", str(num_source),
-    #     "--output_dir", output_dir,
-    #     "--assets_dir", assets_dir,
-    #     "--model_id", model_id,
-    #     "--src_path", f"path?={src_path},name?={src_name}",
-    #     "--ref_path", f"path?={ref_path},name?={ref_name},pose_fc?=300"
-    # ]
-    # opt = subprocess.run(command)
-    # outfle = f'results/primitives/{src_name}/synthesis/imitations/{src_name}-{ref_name}.mp4'
-
-    # return upload_file_to_firebase(outfle, outfle)
+    subprocess.run(command, cwd=working_directory)
+    command = ['python vid2densepose/main.py -i input/applications/akun1.mp4 -o input/applications/output_video.mp4']
+    subprocess.run(command, cwd=working_directory)
     print(f"done {src_url}, {ref_url}, {steps}")
     return f"done {src_url}, {ref_url}, {steps}"
 
